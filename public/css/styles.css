@@ -66,10 +66,12 @@ legend {
     font-family: "Andika";
     font-size: 36;
     color: white;
-    background-image: url('img/bg.jpg');
+    background-image: url('img/lw.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: -19px;
+    margin-top: -60px;
+    margin-left: -60px;
+    margin-right: -60px;
     padding: 180px;
     text-align : center;
     text-shadow: 1px 1px 1px #000;

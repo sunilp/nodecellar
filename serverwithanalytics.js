@@ -9,8 +9,10 @@ var app = express();
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
     app.use(express.logger('dev'));
-    app.use(express.bodyParser())
+    app.use(express.bodyParser());
+    app.use("/pres",  express.static(__dirname + '/pres'));
     app.use(express.static(path.join(__dirname, 'public')));
+
 });
 
 var server = http.createServer(app);
@@ -30,6 +32,8 @@ io.configure(function () {
 server.listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });
+
+app.get('/pres/', wine.findAll);
 
 app.get('/wines', wine.findAll);
 app.get('/wines/:id', wine.findById);

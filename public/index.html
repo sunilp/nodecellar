@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Node Cellar</title>
+    <title>Learn something different</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -28,13 +28,13 @@
 	<script type="text/javascript" src="socket.io/socket.io.js"></script>
     <script>
 // UNCOMMENT THIS CODE IF YOU USE THE "serverwithanalytics" SERVER
-//        var socket = io.connect();
-//        socket.on('connect', function () {
-//            socket.send(window.location.href);
-//        });
-//        window.onhashchange = function () {
-//            socket.send(window.location.href);
-//        }
+        var socket = io.connect();
+        socket.on('connect', function () {
+            socket.send(window.location.href);
+        });
+        window.onhashchange = function () {
+            socket.send(window.location.href);
+        }
     </script>
 
 </head>

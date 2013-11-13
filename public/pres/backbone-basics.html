@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Backbone - The Practitioner Part</title>
+
+		<meta name="description" content="A presentation to show the ease of usage of Javascript">
+		<meta name="author" content="Sunil Prakash">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+       <script src="lib/js/jquery-1.10.2.min.js"></script>
+       <script src="lib/js/underscore-min.js"></script>
+       <script src="lib/js/backbone-min.js"></script>
+
+ <style type="text/css">
+#bbicon{
+	width: 100px;
+	height: 100px;
+	border: none;
+}
+
+ </style>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1> <!--<img src="/img/backbone.png" id="bbicon"/> --> Backbone JS</h1>
+					 <h3>// in Depth.. </h3>
+
+					<p>
+						<small>Created by <a href="http://www.sprakas.com">Sunil Prakash</a> / <a href="http://twitter.com/_sunilp">@_sunilp</a></small>
+					</p>
+				</section>
+
+				
+				   <section>
+					<h2> Require.js </h2>
+					<h4> AMD - module loader  </h4>
+					<hr>
+
+					<p> To begin, include the require script in html file </p>
+
+						<pre><code>   <!-- Load the script "assets/js/main.js" as our entry point -->
+<script data-main="assets/js/main" src="assets/js/libs/require/require.js"></script>
+     </code></pre>      
+ Example usage
+     <pre><code>   <!-- Load the script "assets/js/main.js" as our entry point -->
+define(['jquery'] , function ($) {
+    return function () {};
+});
+
+     </code></pre>      
+
+					<p> It Asyncroniously loads the dependent modules.</p>
+				   </section>
+
+	             <section>
+					<h3>Require Config</h3>
+
+<p> <code>require.config</code> is used for configuration. </p>
+
+					<pre> <code>
+// Filename: main.js
+
+// Require.js allows us to configure shortcut alias
+// There usage will become more apparent further along in the examples.
+require.config({
+  paths: {
+    jquery: 'libs/jquery/jquery-1.10.2.min',
+    underscore: 'libs/underscore/underscore-min',
+    backbone: 'libs/backbone/backbone-min',
+    handlebars: 'libs/handlebars/handlebars-v1.1.0',
+    templates: '../templates'
+  },
+  shim: {
+	    backbone: {
+	        deps: ["underscore", "jquery"],
+	        exports: "Backbone"
+	    },
+
+	    underscore: {
+	        exports: "_"
+	    },
+	    
+	    handlebars: {
+	    	exports: "Handlebars"
+	    }	    
+	}
+
+});
+
+require([
+  // Load our app module and pass it to our definition function
+  'app',
+], function(App){
+  // The "app" dependency is passed in as "App" 
+  App.initialize();
+});
+					</code></pre>
+
+<p>Property <code>paths</code>  is used to provide default paths. </p>
+<p>Property <code>shim</code> is used to provide compatibily to non AMD modules. </p>
+
+				</section>
+
+             <section>
+					<h3>Application Config</h3>
+
+<p>Function <code>define</code> is used to define dependency for current module. </p>
+
+					<pre> <code>
+// Filename: app.js
+define([
+  'jquery', 
+  'underscore', 
+  'backbone',
+  'router', // Request router.js
+], function($, _, Backbone, Router){
+  var initialize = function(){
+    // Pass in our Router module and call it's initialize function
+    Router.initialize();
+  };
+
+  return { 
+    initialize: initialize
+  };
+});
+					</code></pre>
+<p> Object is retured, used to import in other module. </p>
+
+				</section>
+
+                 <section>
+					<h2>Backbone.js</h2>
+<ul>
+	<li>Introduces building blocks of MVC frameworks</li>
+	<li>Manages the conplexity</li>
+	<li>Provides the Structural Components for organizing
+        <ul>
+        	<li>Presentation</li>
+        	<li>Behaviour </li>
+        	<li> Implementation </li>
+        </ul>
+
+	  </li>
+	<li>Keeps view changes in sync</li>
+	<li>Eliminates unmanageable code</li>
+	<li>With RESTful JSON API</li>
+
+</ul>
+
+
+				</section>
+
+				<section>
+					<h3>Backbone.Events</h3>
+<p> It can be mixed in to *any object* in order to provide it with custom events.</p>
+
+   <pre> <code> 
+  var object = {};
+   _.extend(object, Backbone.Events);
+     object.on('expand', function(){ alert('expanded'); });
+     object.trigger('expand');
+  </code> </pre>
+
+  It can be bind with `on` or remove with `off` callback functions to an event; `trigger`-ing an event fires all callbacks in
+  succession.
+
+				</section>
+
+								<section>
+					<h3>Backbone.Events</h3>
+<p> Useful Methods</p>
+<small>
+   <ul>
+<li> <strong> on </strong> <code>  on: function(name, callback, context) {} </code> <font color="green">//Bind an event to a `callback` function. Passing `"all"` will bind the callback to all events fired  </font></li>
+<li> <strong> once </strong> <code>  once: function(name, callback, context) {}</code>  <font color="green">// Bind an event to only be triggered a single time. After the first time the callback is invoked, it will be removed.  </font>
+</li>
+<li> <strong> off </strong> <code>  off: function(name, callback, context) {} </code>  <font color="green">// Remove one or many callbacks. If `context` is null, removes all
+ callbacks with that function. If `callback` is null, removes all callbacks for the event. If `name` is null, removes all bound
+  callbacks for all events.  </font> </li>
+<li> <strong>trigger </strong><code>  trigger: function(name) {} </code> <font color="green"> //Trigger one or many events  </font></li>
+<li> <strong>stopListening</strong> <code>  stopListening: function(obj, name, callback) {} </code>  <font color="green">//Tell this object to stop listening to either specific events ... or to every object it's currently listening to  </font></li>
+
+
+   </ul>
+</small>
+				</section>
+
+				<section>
+					<h3>Models</h3>
+
+
+  Generating model class
+   <pre> <code> 
+var Person = Backbone.Model.extend({
+	initialize: function(){
+	console.log("A person is Born !");
+}
+});
+  </code> </pre>
+
+  Generating model instance
+   <pre> <code> 
+var person = new Person(
+	{name: 'sashwat', gender: 'male'}
+);
+  </code> </pre>
+
+  A client id (`cid`) is automatically generated and assigned.
+
+				</section>
+
+
+				<section>
+					<h3>Models</h3>
+
+To get an attibute 
+   <pre> <code> 
+person.get('name');
+  </code> </pre>
+
+To set an attibute 
+   <pre> <code> 
+person.set('age', '1');
+//or
+person.set({age: 1, dob: '09/22/2012'});
+
+  </code> </pre>
+
+
+				</section>
+
+				<section>
+					<h3>Models</h3>
+
+Setting Defaults value
+   <pre> <code> 
+var Person = Backbone.Model.extend({
+
+	defaults : {
+		name: 'Shashwat',
+		age: 0,
+		friends: []
+	},
+	initialize: function(){
+	console.log("A person is Born !");
+	}
+});
+  </code> </pre>
+
+Defaults is used to initialize attributes.
+
+
+				</section>
+
+<section>
+										<h4>Fetching data from server </h4>
+
+URL to set for getting JSON data from server
+   <pre> <code> 
+person.url = '/person';
+/* or , for collection of person */
+var Person = Backbone.Model.extend({urlRoot: '/people'});
+  </code> </pre>
+
+Poplate data from server
+   <pre> <code> 
+person.fetch(); 
+/* --> {id:1, name: 'shashwat', fridends['shejal','pihu','prajwal']} */
+//or
+var person = new Person({id:1});
+person.fetch(); // GET /people/1
+
+person.get('name');
+//--> 'shashwat'
+  </code> </pre>
+
+
+
+				</section>
+
+<section>
+					<h4>Updating data to server </h4>
+
+To post an update
+   <pre> <code> 
+person.set({friends:['pihu']});
+person.save();// PUT /people/1 with JSON params
+
+person.get('id'); //--> 1
+
+  </code> </pre>
+
+To get data and delete it
+   <pre> <code> 
+person.toJSON(); //convert into json string
+//--> {id:1, name:'shashwat'}
+
+var person = new Person();
+person.save(); // POST if first time save
+
+person.destroy(); // DELETE /person/2
+  </code> </pre>
+
+
+
+				</section>
+
+
+				<section>
+					<h1>THE END</h1>
+					<h3>Thank You</h3>
+					<p>By Sunil Prakash</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

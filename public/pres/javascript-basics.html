@@ -478,17 +478,78 @@
 					<p> In JavaScript, the three common ways to create new objects are as follows. </p>
 					<pre><code data-trim contenteditable>
 					// Each of the following options will create a new empty object:
-		var newObject = {}; // or
-		var newObject = Object.create(null); // or
-		var newObject = new Object();
+						var newObject = {}; // or
+						var newObject = Object.create(null); // or
+						var newObject = new Object();
 					</code></pre>
 					
 				   </section>
 
 				</section>
 
+				   <section>
+					<h2> Unit Testing  </h2>
+					<h3>  Jasmine </h3>
+					<pre><code data-trim contenteditable>
+describe("General Test", function(){
+
+	it("should exist", function(){
+
+	 var f = new MyApp.myFun();
+	 
+	 console.log(MyApp.myFun.n2);
+	  
+	  expect(MyApp.myFun.n2).toEqual(56);
+	  
+	  expect(f.n1).toBe(5);
+
+	});
 
 
+});
+					</code></pre>
+					<p> Jasmine is a behavior-driven development framework for testing JavaScript code.</p>
+				   </section>
+
+				   <section>
+				   	<h3> Jasmine Matchers </h3>
+<pre><code data-trim contenteditable style="margin-left:-100px;width:140%;">
+//Jasmine has several built-in matchers. Here are a few:
+
+    expect(x).toEqual(y); //compares objects or primitives x and y and passes if they are equivalent
+
+    expect(x).toBe(y); //compares objects or primitives x and y and passes if they are the same object
+
+    expect(x).toMatch(pattern); //compares x to string or regular expression pattern and passes if they match
+
+    expect(x).toBeDefined(); //passes if x is not undefined
+
+    expect(x).toBeUndefined(); //passes if x is undefined
+
+    expect(x).toBeNull(); //passes if x is null
+
+    expect(x).toBeTruthy(); //passes if x evaluates to true
+
+    expect(x).toBeFalsy(); //passes if x evaluates to false
+
+    expect(x).toContain(y); //passes if array or string x contains y
+
+    expect(x).toBeLessThan(y); //passes if x is less than y
+
+    expect(x).toBeGreaterThan(y); //passes if x is greater than y
+
+    expect(function(){fn();}).toThrow(e); //passes if function fn throws exception e when executed
+/*
+The old matchers toNotEqual, toNotBe, toNotMatch, and toNotContain have been deprecated and will be removed in a future release. Please change your specs to use not.toEqual, not.toBe, not.toMatch, and not.toContain respectively.
+*/
+
+//Every matcher's criteria can be inverted by prepending .not:
+
+    expect(x).not.toEqual(y); compares objects or primitives x and y and passes if they are not equivalent
+
+</code></pre>
+
+</section>
 
 				<section>
 					<h1>THE END</h1>

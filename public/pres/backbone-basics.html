@@ -35,7 +35,9 @@
 	height: 100px;
 	border: none;
 }
-
+#tt4 tr td:first-child{
+color: brown;
+}
  </style>
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -332,6 +334,109 @@ person.destroy(); // DELETE /person/2
 
 				</section>
 
+
+	</section>
+
+<section>
+					<h4>Model and Events </h4>
+
+Backbone.Model is Backbone.Events
+   <pre> <code> 
+// Attach all inheritable methods to the Model prototype.
+  _.extend(Model.prototype, Events, { ..
+
+  </code> </pre>
+
+To listen for changes
+   <pre> <code> 
+person.on('change', doSomeThing);
+
+person.set({age:1}); // triggers callback method
+
+person.set({age:1},{silent:true}) // set silently without triggering event
+
+person.off('change',doSomeThing); // remove listening event
+  </code> </pre>
+
+
+
+				</section>			
+
+<section>
+					<h4>Built-in events</h4>
+<pre> <code>
+	person.on('event',callback);
+	
+</code></pre>
+
+<table id="tt4">
+	<tr><td>change</td> <td>When any attribute is modified</td></tr>
+	<tr><td>change: &lt;attr&gt;</td> <td>When &lt;attr&gt; attribute is modified</td></tr>
+	<tr><td>destroy</td> <td>When a model is destroyed</td></tr>
+	<tr><td>sync</td> <td>Whenever successfully synced</td></tr>
+	<tr><td>error</td> <td>When model save or validation fails</td></tr>
+	<tr><td>all</td> <td>Any triggered event</td></tr>
+</table>
+
+
+
+</section>			
+
+			<section>
+					<h3>Backbone.Model</h3>
+<p> Useful attrs & Methods</p>
+<small>
+   <ul>
+<li> <strong> changed </strong> <code>   changed: null </code> <font color="green">//A hash of attributes whose current and previous value differ.  </font></li>
+<li> <strong> validationError </strong> <code>  validationError: null</code>  <font color="green">// The value returned during the last failed validation.  </font>
+</li>
+<li> <strong> idAttribute </strong> <code>  idAttribute: 'id' </code>  <font color="green">// The default name for the JSON `id` attribute is `"id"`.  </font> </li>
+<li> <strong>initialize </strong><code> initialize: function(){} </code> <font color="green"> //Initialize is an empty function by default  </font></li>
+<li> <strong>toJSON</strong> <code>  toJSON: function(options) {} </code>  <font color="green">//Return a copy of the model's `attributes` object </font></li>
+
+<li> <strong>sync</strong> <code>   sync: function() {} </code>  <font color="green">//Proxy `Backbone.sync` by default -- but override this if you need</font></li>
+
+<li> <strong>get</strong> <code>      get: function(attr) {} </code>  <font color="green">//Get the value of an attribute. </font></li>
+
+<li> <strong>escape</strong> <code>      escape: function(attr) {} </code>  <font color="green">//Get the HTML-escaped value of an attribute. </font></li>
+
+<li> <strong>has</strong> <code>  has: function(attr) {} </code>  <font color="green">//Returns `true` if the attribute contains a value that is not null or undefined</font></li>
+
+<li> <strong>set</strong> <code>  set: function(key, val, options) {} </code>  <font color="green">//Set a hash of model attributes on the object, firing `"change"`. This is the core primitive operation of a model, updating the data and notifying anyone who needs to know about the change in state. </font></li>
+
+
+
+
+   </ul>
+
+</small>
+				</section>
+
+	<section>
+					<h3>Backbone.Model</h3>
+<p> Useful Methods</p>
+<small>
+   <ul>
+
+
+<li> <strong>unset</strong> <code>      unset: function(attr, options) {} </code>  <font color="green">//Remove an attribute from the model, firing `"change"` </font></li>
+
+<li> <strong>clear</strong> <code>clear: function(options) {} </code>  <font color="green">//Clear all attributes on the model, firing `"change"` </font></li>
+
+<li> <strong>fetch</strong> <code>fetch: function(options) {} </code>  <font color="green">//Fetch the model from the server </font></li>
+
+<li> <strong>save</strong> <code>      save: function(key, val, options) {} </code>  <font color="green">// Set a hash of model attributes, and sync the model to the server. If the server returns an attributes hash that differs, the model's state will be `set` again </font></li>
+
+<li> <strong>destroy</strong> <code>destroy: function(options) {} </code>  <font color="green">//Destroy this model on the server if it was already persisted. Optimistically removes the model from its collection, if it has one. If `wait: true` is passed, waits for the server to respond before removal. </font></li>
+
+<li> <strong>clone</strong> <code>  clone: function() {} </code>  <font color="green">//Create a new model with identical attributes to this one.</font></li>
+
+
+   </ul>
+
+Some methods from _ <code> ['keys', 'values', 'pairs', 'invert', 'pick', 'omit'] </code>
+</small>
+				</section>
 
 				<section>
 					<h1>THE END</h1>

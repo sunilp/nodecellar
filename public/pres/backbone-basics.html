@@ -68,7 +68,11 @@ color: brown;
 					<p> To begin, include the require script in html file </p>
 
 						<pre><code>   <!-- Load the script "assets/js/main.js" as our entry point -->
+<!--
+
 <script data-main="assets/js/main" src="assets/js/libs/require/require.js"></script>
+
+-->
      </code></pre>      
  Example usage
      <pre><code>   <!-- Load the script "assets/js/main.js" as our entry point -->
@@ -348,7 +352,7 @@ Backbone.Model is Backbone.Events
   </code> </pre>
 
 To listen for changes
-   <pre> <code> 
+   <pre> <code data-trim contenteditable> 
 person.on('change', doSomeThing);
 
 person.set({age:1}); // triggers callback method
@@ -364,7 +368,7 @@ person.off('change',doSomeThing); // remove listening event
 
 <section>
 					<h4>Built-in events</h4>
-<pre> <code>
+<pre> <code data-trim contenteditable>
 	person.on('event',callback);
 	
 </code></pre>
@@ -415,6 +419,7 @@ person.off('change',doSomeThing); // remove listening event
 	<section>
 					<h3>Backbone.Model</h3>
 <p> Useful Methods</p>
+
 <small>
    <ul>
 
@@ -438,8 +443,91 @@ Some methods from _ <code> ['keys', 'values', 'pairs', 'invert', 'pick', 'omit']
 </small>
 				</section>
 
+
+                 <section>
+
+					<h2>Collection</h2>
+					
+					<ul>
+						<li> If models tend to represent a single row of data, a Backbone Collection is more analagous to a table full of data</li>
+						<li>  Collections maintain indexes of their models, both in order, and for lookup by `id`.</li>
+
+					</ul>
+					<pre> <code data-trim contenteditable>
+var People = Backbone.Collection.extend({
+	model: Person
+});
+
+var people = new People();
+					</code></pre>
+
+
+				 </section>
+
+
+                 <section>
+
+					<h4>Adding / Removing</h4>
+					
+					<ul>
+						<li> getting number of models
+<pre> <code data-trim contenteditable>
+people.lenght; //--> 3
+</code></pre>
+
+						</li>
+						<li>  adding a model
+<pre> <code data-trim contenteditable>
+people.add(person1);
+					</code></pre>
+
+						</li>
+						<li>  get model by index
+<pre> <code data-trim contenteditable>
+people.at(0);
+					</code></pre>
+
+						</li>
+<li>  get model by Id
+<pre> <code data-trim contenteditable>
+people.get(1);
+					</code></pre>
+
+						</li>
+<li>  removing the model
+<pre> <code data-trim contenteditable>
+people.remove(person1);
+					</code></pre>
+
+						</li>
+
+					</ul>
+			
+
+				 </section>
+
+
+				  <section>
+
+					<h2>View</h2>
+					<p> A View is simply a JavaScript object that represents a logical chunk of UI in the DOM <p>
+					<pre> <code data-trim contenteditable>
+var PersonView = Backbone.View.extend({
+	initialize : function(){
+	console.log('a view is created.');
+}
+});
+
+var personView = new PersonView();
+console.log(personView.el);
+
+					</code></pre>
+<p> All views have associated DOM element, which is refered with <code> .el </code> property </p>
+				 </section>
+
 				<section>
-					<h1>THE END</h1>
+
+					<h2>New Beginning...</h2>
 					<h3>Thank You</h3>
 					<p>By Sunil Prakash</p>
 				</section>
